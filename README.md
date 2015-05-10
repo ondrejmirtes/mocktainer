@@ -5,7 +5,7 @@ Mocktainer
 [![Coverage Status](https://coveralls.io/repos/ondrejmirtes/mocktainer/badge.svg)](https://coveralls.io/r/ondrejmirtes/mocktainer)
 [![Latest Stable Version](https://poser.pugx.org/ondrejmirtes/mocktainer/v/stable)](https://packagist.org/packages/ondrejmirtes/mocktainer)
 
-Tired of passing mocked dependencies you don't care about to classes under tests?
+Tired of passing mocked dependencies you don't care about to classes under test?
 
 Is this code familiar to you?
 
@@ -39,7 +39,7 @@ $interestingDependency->expects($this->once())
 	->method('getAwesome')
 	->getMock();
 
-$this->getMocktainer()->getMock(Bar::class, ['foo5' => $interestingDependency]);
+$bar = $this->getMocktainer()->getMock(Bar::class, ['foo5' => $interestingDependency]);
 ```
 
 Other mockable constructor arguments will be mocked using `MockBuilder` and `disableOriginalConstructor()`.
