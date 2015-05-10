@@ -8,7 +8,7 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 	public function testMockedClassNotFound()
 	{
 		try {
-			$this->getMocktainer()->getMock(Nonexistent::class);
+			$this->getMocktainer()->create(Nonexistent::class);
 			$this->fail();
 		} catch (\Mocktainer\ClassNotFoundException $e) {
 			$this->assertSame('Class Mocktainer\Nonexistent not found', $e->getMessage());
@@ -18,7 +18,7 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 
 	public function testCreateServiceWithAllMocks()
 	{
-		$fooService = $this->getMocktainer()->getMock(FooService::class);
+		$fooService = $this->getMocktainer()->create(FooService::class);
 		$this->assertInstanceOf(FooService::class, $fooService);
 		$barService = $fooService->barService;
 		$this->assertInstanceOf(BarService::class, $barService);
@@ -28,7 +28,7 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 	public function testPassNonexistentConstructorArgument()
 	{
 		try {
-			$this->getMocktainer()->getMock(FooService::class, [
+			$this->getMocktainer()->create(FooService::class, [
 				'barService' => new BarService(),
 				'baz' => 'bazValue',
 			]);
@@ -43,7 +43,7 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 	public function testPassConstructorArgumentToConstructor()
 	{
 		$barService = new BarService();
-		$fooService = $this->getMocktainer()->getMock(FooService::class, [
+		$fooService = $this->getMocktainer()->create(FooService::class, [
 			'barService' => $barService,
 		]);
 		$this->assertInstanceOf(FooService::class, $fooService);
@@ -53,7 +53,7 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 	public function testRequireUnmockableConstructorArgument()
 	{
 		try {
-			$this->getMocktainer()->getMock(ClassWithRequiredArrayInConstructor::class);
+			$this->getMocktainer()->create(ClassWithRequiredArrayInConstructor::class);
 			$this->fail();
 		} catch (\Mocktainer\UnmockableConstructorArgumentException $e) {
 			$this->assertSame('Constructor argument "options" of class Mocktainer\ClassWithRequiredArrayInConstructor cannot be mocked', $e->getMessage());
@@ -64,7 +64,7 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 
 	public function testBeQuietAboutOptionalConstructorArgument()
 	{
-		$mock = $this->getMocktainer()->getMock(ClassWithOptionalArrayInConstructor::class);
+		$mock = $this->getMocktainer()->create(ClassWithOptionalArrayInConstructor::class);
 		$this->assertInstanceOf(ClassWithOptionalArrayInConstructor::class, $mock);
 		$fooService = $mock->fooService;
 		$this->assertInstanceOf(FooService::class, $fooService);
@@ -74,7 +74,7 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 
 	public function testUseDefaultConstructorArgument()
 	{
-		$mock = $this->getMocktainer()->getMock(ClassWithDefaultArgumentValueBetweenArguments::class);
+		$mock = $this->getMocktainer()->create(ClassWithDefaultArgumentValueBetweenArguments::class);
 		$this->assertInstanceOf(ClassWithDefaultArgumentValueBetweenArguments::class, $mock);
 		$fooService = $mock->fooService;
 		$this->assertInstanceOf(FooService::class, $fooService);

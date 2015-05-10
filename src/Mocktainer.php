@@ -17,7 +17,7 @@ class Mocktainer
 	 * @param string $className
 	 * @param mixed[] $constructorArguments
 	 */
-	public function getMock($className, array $constructorArguments = [])
+	public function create($className, array $constructorArguments = [])
 	{
 		if (!class_exists($className)) {
 			throw new \Mocktainer\ClassNotFoundException($className);
