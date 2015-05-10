@@ -5,7 +5,7 @@ namespace Mocktainer;
 class FooService
 {
 
-	/** @var \BarService */
+	/** @var \Mocktainer\BarService */
 	public $barService;
 
 	public function __construct(BarService $barService)

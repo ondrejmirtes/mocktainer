@@ -13,7 +13,7 @@ class ClassWithRequiredArrayInConstructor
 
 	/**
 	 * @param \Mocktainer\FooService $fooService
-	 * @param mixed[ $options
+	 * @param mixed[] $options
 	 */
 	public function __construct(FooService $fooService, array $options)
 	{
