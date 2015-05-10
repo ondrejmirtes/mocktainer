@@ -40,7 +40,7 @@ $interestingDependency->expects($this->once())
 	->method('getAwesome')
 	->getMock();
 
-$bar = $this->getMocktainer()->getMock(Bar::class, ['foo5' => $interestingDependency]);
+$bar = $this->getMocktainer()->create(Bar::class, ['foo5' => $interestingDependency]);
 ```
 
 Other mockable constructor arguments will be mocked using `MockBuilder` and `disableOriginalConstructor()`.
