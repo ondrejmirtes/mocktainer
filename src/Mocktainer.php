@@ -54,7 +54,7 @@ class Mocktainer
 	private function getArgumentMock($className, $argumentName, \ReflectionParameter $parameter)
 	{
 		if ($parameter->getClass() !== null) {
-			return $this->testCase->getMockBuilder($parameter->getClass()->getName())
+			return $this->testCase->getMockBuilder($parameter->getClass()->name)
 				->disableOriginalConstructor()
 				->getMock();
 		}
@@ -70,7 +70,7 @@ class Mocktainer
 	{
 		$parameters = [];
 		foreach ($constructorReflection->getParameters() as $parameter) {
-			$parameters[$parameter->getName()] = $parameter;
+			$parameters[$parameter->name] = $parameter;
 		}
 
 		return $parameters;
