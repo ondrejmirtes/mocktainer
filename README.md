@@ -2,6 +2,7 @@ Mocktainer
 =====================
 
 [![Build Status](https://travis-ci.org/ondrejmirtes/mocktainer.svg)](https://travis-ci.org/ondrejmirtes/mocktainer)
+[![Coverage Status](https://coveralls.io/repos/ondrejmirtes/mocktainer/badge.svg)](https://coveralls.io/r/ondrejmirtes/mocktainer)
 [![Latest Stable Version](https://poser.pugx.org/ondrejmirtes/mocktainer/v/stable)](https://packagist.org/packages/ondrejmirtes/mocktainer)
 
 Tired of passing mocked dependencies you don't care about to classes under tests?

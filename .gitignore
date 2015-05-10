@@ -1,4 +1,4 @@
 /bin
-/coverage
+/build/log
 /vendor
 /composer.lock
