@@ -15,61 +15,90 @@ class Mocktainer
 
 	/**
 	 * @param string $className
-	 * @param mixed[] $constructorArguments
+	 * @param mixed[] $methodArguments
+	 * @return object
 	 */
-	public function create($className, array $constructorArguments = [])
+	public function create($className, array $methodArguments = [])
 	{
 		if (!class_exists($className)) {
 			throw new \Mocktainer\ClassNotFoundException($className);
 		}
 
 		$classReflection = new \ReflectionClass($className);
-		$constructorReflection = $classReflection->getConstructor();
-		$constructorArgumentsToCall = [];
+		$methodArgumentsToCall = $this->completeMethodArguments($classReflection, '__construct', $methodArguments);
 
-		foreach ($this->getConstructorParameters($constructorReflection) as $name => $parameter) {
-			if (isset($constructorArguments[$name])) {
-				$constructorArgumentsToCall[] = $constructorArguments[$name];
-				unset($constructorArguments[$name]);
-			} elseif ($parameter->isDefaultValueAvailable()) {
-				$constructorArgumentsToCall[] = $parameter->getDefaultValue();
-			} else {
-				$constructorArgumentsToCall[] = $this->getArgumentMock($className, $name, $parameter);
-			}
-		}
-
-		if (count($constructorArguments) > 0) {
-			throw new \Mocktainer\UnknownConstructorArgumentsException($className, $constructorArguments);
-		}
-
-		return $classReflection->newInstanceArgs($constructorArgumentsToCall);
+		return $classReflection->newInstanceArgs($methodArgumentsToCall);
 	}
 
 	/**
-	 * @param string $className
-	 * @param string $argumentName
+	 * @param object $object
+	 * @param string $methodName
+	 * @param mixed[] $methodArguments
+	 */
+	public function call($object, $methodName, array $methodArguments = [])
+	{
+		$classReflection = new \ReflectionClass($object);
+		$methodArgumentsToCall = $this->completeMethodArguments($classReflection, $methodName, $methodArguments);
+
+		call_user_func_array([$object, $methodName], $methodArgumentsToCall);
+	}
+
+	/**
+	 * @param \ReflectionClass $classReflection
+	 * @param string $methodName
+	 * @param mixed[] $methodArguments
+	 * @return \mixed[]
+	 */
+	private function completeMethodArguments(\ReflectionClass $classReflection, $methodName, array $methodArguments)
+	{
+		$methodReflection = $classReflection->getMethod($methodName);
+		$methodArgumentsToCall = [];
+
+		foreach ($this->getMethodParameters($methodReflection) as $name => $parameter) {
+			if (isset($methodArguments[$name])) {
+				$methodArgumentsToCall[] = $methodArguments[$name];
+				unset($methodArguments[$name]);
+			} elseif ($parameter->isDefaultValueAvailable()) {
+				$methodArgumentsToCall[] = $parameter->getDefaultValue();
+			} else {
+				$methodArgumentsToCall[] = $this->getArgumentMock($parameter);
+			}
+		}
+
+		if (count($methodArguments) > 0) {
+			throw new \Mocktainer\UnknownMethodArgumentsException($classReflection->getName(), $methodName, $methodArguments);
+		}
+
+		return $methodArgumentsToCall;
+	}
+
+	/**
 	 * @param \ReflectionParameter $parameter
 	 * @return mixed
 	 */
-	private function getArgumentMock($className, $argumentName, \ReflectionParameter $parameter)
+	private function getArgumentMock(\ReflectionParameter $parameter)
 	{
 		if ($parameter->getClass() !== null) {
-			return $this->testCase->getMockBuilder($parameter->getClass()->name)
+			return $this->testCase->getMockBuilder($parameter->getClass()->getName())
 				->disableOriginalConstructor()
 				->getMock();
 		}
 
-		throw new \Mocktainer\UnmockableConstructorArgumentException($className, $argumentName);
+		throw new \Mocktainer\UnmockableMethodArgumentException(
+			$parameter->getDeclaringClass()->getName(),
+			$parameter->getDeclaringFunction()->getName(),
+			$parameter->getName()
+		);
 	}
 
 	/**
-	 * @param \ReflectionMethod $constructorReflection
+	 * @param \ReflectionMethod $methodReflection
 	 * @return \ReflectionParameter[]
 	 */
-	private function getConstructorParameters(\ReflectionMethod $constructorReflection)
+	private function getMethodParameters(\ReflectionMethod $methodReflection)
 	{
 		$parameters = [];
-		foreach ($constructorReflection->getParameters() as $parameter) {
+		foreach ($methodReflection->getParameters() as $parameter) {
 			$parameters[$parameter->name] = $parameter;
 		}
 
