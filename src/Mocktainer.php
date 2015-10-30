@@ -31,6 +31,19 @@ class Mocktainer
 	}
 
 	/**
+	 * @param object $object
+	 * @param string $methodName
+	 * @param mixed[] $methodArguments
+	 */
+	public function call($object, $methodName, array $methodArguments = [])
+	{
+		$classReflection = new \ReflectionClass($object);
+		$methodArgumentsToCall = $this->completeMethodArguments($classReflection, $methodName, $methodArguments);
+
+		call_user_func_array([$object, $methodName], $methodArgumentsToCall);
+	}
+
+	/**
 	 * @param \ReflectionClass $classReflection
 	 * @param string $methodName
 	 * @param mixed[] $methodArguments

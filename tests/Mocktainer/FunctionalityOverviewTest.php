@@ -25,6 +25,16 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 		$this->assertContains('Mock_', get_class($barService));
 	}
 
+	public function testCallMethodWithAllMocks()
+	{
+		$fooService = $this->getMocktainer()->create(FooService::class);
+		$this->assertInstanceOf(FooService::class, $fooService);
+		$this->getMocktainer()->call($fooService, 'setBazService');
+		$bazService = $fooService->bazService;
+		$this->assertInstanceOf(BazService::class, $bazService);
+		$this->assertContains('Mock_', get_class($bazService));
+	}
+
 	public function testPassNonexistentConstructorArgument()
 	{
 		try {
@@ -49,6 +59,20 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 		]);
 		$this->assertInstanceOf(FooService::class, $fooService);
 		$this->assertSame($barService, $fooService->barService);
+	}
+
+	public function testCallWithMethodArgument()
+	{
+		$barService = new BarService();
+		$fooService = $this->getMocktainer()->create(FooService::class, [
+			'barService' => $barService,
+		]);
+		$bazService = new BazService();
+		$this->getMocktainer()->call($fooService, 'setBazService', [
+			'bazService' => $bazService,
+		]);
+		$this->assertInstanceOf(FooService::class, $fooService);
+		$this->assertSame($bazService, $fooService->bazService);
 	}
 
 	public function testRequireUnmockableConstructorArgument()
