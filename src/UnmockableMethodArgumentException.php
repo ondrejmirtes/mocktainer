@@ -2,24 +2,29 @@
 
 namespace Mocktainer;
 
-class UnmockableConstructorArgumentException extends \Exception
+class UnmockableMethodArgumentException extends \Exception
 {
 
 	/** @var string */
 	private $className;
 
 	/** @var string */
+	private $methodName;
+
+	/** @var string */
 	private $argumentName;
 
-	public function __construct($className, $argumentName)
+	public function __construct($className, $methodName, $argumentName)
 	{
 		parent::__construct(sprintf(
-			'Constructor argument "%s" of class %s cannot be mocked',
+			'Argument "%s" of method %s::%s cannot be mocked',
 			$argumentName,
-			$className
+			$className,
+			$methodName
 		));
 
 		$this->className = $className;
+		$this->methodName = $methodName;
 		$this->argumentName = $argumentName;
 	}
 
@@ -29,6 +34,14 @@ class UnmockableConstructorArgumentException extends \Exception
 	public function getClassName()
 	{
 		return $this->className;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMethodName()
+	{
+		return $this->methodName;
 	}
 
 	/**

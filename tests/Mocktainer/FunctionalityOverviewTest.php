@@ -33,9 +33,10 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 				'baz' => 'bazValue',
 			]);
 			$this->fail();
-		} catch (\Mocktainer\UnknownConstructorArgumentsException $e) {
-			$this->assertSame('Passed unknown constructor arguments for class Mocktainer\FooService: baz', $e->getMessage());
+		} catch (\Mocktainer\UnknownMethodArgumentsException $e) {
+			$this->assertSame('Passed unknown arguments for method Mocktainer\FooService::__construct: baz', $e->getMessage());
 			$this->assertSame(FooService::class, $e->getClassName());
+			$this->assertSame('__construct', $e->getMethodName());
 			$this->assertSame(['baz' => 'bazValue'], $e->getArguments());
 		}
 	}
@@ -55,9 +56,10 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 		try {
 			$this->getMocktainer()->create(ClassWithRequiredArrayInConstructor::class);
 			$this->fail();
-		} catch (\Mocktainer\UnmockableConstructorArgumentException $e) {
-			$this->assertSame('Constructor argument "options" of class Mocktainer\ClassWithRequiredArrayInConstructor cannot be mocked', $e->getMessage());
+		} catch (\Mocktainer\UnmockableMethodArgumentException $e) {
+			$this->assertSame('Argument "options" of method Mocktainer\ClassWithRequiredArrayInConstructor::__construct cannot be mocked', $e->getMessage());
 			$this->assertSame(ClassWithRequiredArrayInConstructor::class, $e->getClassName());
+			$this->assertSame('__construct', $e->getMethodName());
 			$this->assertSame('options', $e->getArgumentName());
 		}
 	}
