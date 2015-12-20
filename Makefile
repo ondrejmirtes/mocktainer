@@ -7,7 +7,7 @@ lint:
 	bin/parallel-lint src tests
 
 cs:
-	bin/phpcs --standard=vendor/consistence/coding-standard/Consistence/ruleset.xml --extensions=php --encoding=utf-8 -sp src tests
+	bin/phpcs --standard=ruleset.xml --extensions=php --tab-width=4 --encoding=utf-8 -sp src tests
 
 test:
 	bin/phpunit -c tests/phpunit.xml tests
