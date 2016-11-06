@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Mocktainer;
 
@@ -17,7 +17,7 @@ class Mocktainer
 	 * @param string $className
 	 * @param mixed[] $constructorArguments
 	 */
-	public function create($className, array $constructorArguments = [])
+	public function create(string $className, array $constructorArguments = [])
 	{
 		if (!class_exists($className)) {
 			throw new \Mocktainer\ClassNotFoundException($className);
@@ -51,7 +51,7 @@ class Mocktainer
 	 * @param \ReflectionParameter $parameter
 	 * @return mixed
 	 */
-	private function getArgumentMock($className, $argumentName, \ReflectionParameter $parameter)
+	private function getArgumentMock(string $className, string $argumentName, \ReflectionParameter $parameter)
 	{
 		if ($parameter->getClass() !== null) {
 			return $this->testCase->getMockBuilder($parameter->getClass()->name)
@@ -66,7 +66,7 @@ class Mocktainer
 	 * @param \ReflectionMethod $constructorReflection
 	 * @return \ReflectionParameter[]
 	 */
-	private function getConstructorParameters(\ReflectionMethod $constructorReflection)
+	private function getConstructorParameters(\ReflectionMethod $constructorReflection): array
 	{
 		$parameters = [];
 		foreach ($constructorReflection->getParameters() as $parameter) {

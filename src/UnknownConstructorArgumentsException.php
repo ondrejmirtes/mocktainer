@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Mocktainer;
 
@@ -15,7 +15,7 @@ class UnknownConstructorArgumentsException extends \Exception
 	 * @param string $className
 	 * @param mixed[] $arguments name(string) => value(mixed)
 	 */
-	public function __construct($className, array $arguments)
+	public function __construct(string $className, array $arguments)
 	{
 		parent::__construct(sprintf(
 			'Passed unknown constructor arguments for class %s: %s',
@@ -27,7 +27,7 @@ class UnknownConstructorArgumentsException extends \Exception
 		$this->arguments = $arguments;
 	}
 
-	public function getClassName()
+	public function getClassName(): string
 	{
 		return $this->className;
 	}
@@ -35,7 +35,7 @@ class UnknownConstructorArgumentsException extends \Exception
 	/**
 	 * @return mixed[]
 	 */
-	public function getArguments()
+	public function getArguments(): array
 	{
 		return $this->arguments;
 	}

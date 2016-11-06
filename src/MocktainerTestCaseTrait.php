@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Mocktainer;
 
@@ -11,7 +11,7 @@ trait MocktainerTestCaseTrait
 	/**
 	 * @return \Mocktainer\Mocktainer
 	 */
-	public function getMocktainer()
+	public function getMocktainer(): Mocktainer
 	{
 		if ($this->mocktainer === null) {
 			$this->mocktainer = new Mocktainer($this);
