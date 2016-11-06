@@ -1,4 +1,4 @@
-build: composer lint cs test
+build: composer check
 
 composer:
 	composer install
@@ -11,3 +11,5 @@ cs:
 
 test:
 	bin/phpunit -c tests/phpunit.xml tests
+
+check: lint cs test
