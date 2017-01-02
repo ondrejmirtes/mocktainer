@@ -8,11 +8,11 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 	public function testMockedClassNotFound()
 	{
 		try {
-			$this->getMocktainer()->create(Nonexistent::class);
+			$this->getMocktainer()->create('Mocktainer\Nonexistent');
 			$this->fail();
 		} catch (\Mocktainer\ClassNotFoundException $e) {
 			$this->assertSame('Class Mocktainer\Nonexistent not found', $e->getMessage());
-			$this->assertSame(Nonexistent::class, $e->getClassName());
+			$this->assertSame('Mocktainer\Nonexistent', $e->getClassName());
 		}
 	}
 
