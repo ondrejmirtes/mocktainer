@@ -5,10 +5,10 @@ namespace Mocktainer;
 class Mocktainer
 {
 
-	/** @var \PHPUnit_Framework_TestCase */
+	/** @var \PHPUnit\Framework\TestCase */
 	private $testCase;
 
-	public function __construct(\PHPUnit_Framework_TestCase $testCase)
+	public function __construct(\PHPUnit\Framework\TestCase $testCase)
 	{
 		$this->testCase = $testCase;
 	}
