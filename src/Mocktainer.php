@@ -16,6 +16,7 @@ class Mocktainer
 	/**
 	 * @param string $className
 	 * @param mixed[] $constructorArguments
+	 * @return mixed
 	 */
 	public function create(string $className, array $constructorArguments = [])
 	{

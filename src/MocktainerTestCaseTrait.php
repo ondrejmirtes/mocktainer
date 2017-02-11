@@ -8,9 +8,6 @@ trait MocktainerTestCaseTrait
 	/** @var \Mocktainer\Mocktainer */
 	private $mocktainer;
 
-	/**
-	 * @return \Mocktainer\Mocktainer
-	 */
 	public function getMocktainer(): Mocktainer
 	{
 		if ($this->mocktainer === null) {
