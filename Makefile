@@ -13,6 +13,6 @@ test:
 	bin/phpunit -c tests/phpunit.xml tests
 
 phpstan:
-	bin/phpstan analyse -l 5 src tests
+	bin/phpstan analyse -l 7 src tests
 
 check: lint cs test phpstan
