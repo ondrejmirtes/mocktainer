@@ -22,7 +22,7 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 		$this->assertInstanceOf(FooService::class, $fooService);
 		$barService = $fooService->barService;
 		$this->assertInstanceOf(BarService::class, $barService);
-		$this->assertContains('Mock_', get_class($barService));
+		$this->assertStringContainsString('Mock_', get_class($barService));
 	}
 
 	public function testPassNonexistentConstructorArgument()
@@ -68,7 +68,7 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 		$this->assertInstanceOf(ClassWithOptionalArrayInConstructor::class, $mock);
 		$fooService = $mock->fooService;
 		$this->assertInstanceOf(FooService::class, $fooService);
-		$this->assertContains('Mock_', get_class($fooService));
+		$this->assertStringContainsString('Mock_', get_class($fooService));
 		$this->assertSame([], $mock->options);
 	}
 
@@ -78,11 +78,11 @@ class FunctionalityOverviewTest extends \Mocktainer\TestCase
 		$this->assertInstanceOf(ClassWithDefaultArgumentValueBetweenArguments::class, $mock);
 		$fooService = $mock->fooService;
 		$this->assertInstanceOf(FooService::class, $fooService);
-		$this->assertContains('Mock_', get_class($fooService));
+		$this->assertStringContainsString('Mock_', get_class($fooService));
 		$this->assertSame(['foobar' => 'foobarValue'], $mock->options);
 		$barService = $mock->barService;
 		$this->assertInstanceOf(BarService::class, $barService);
-		$this->assertContains('Mock_', get_class($barService));
+		$this->assertStringContainsString('Mock_', get_class($barService));
 	}
 
 }

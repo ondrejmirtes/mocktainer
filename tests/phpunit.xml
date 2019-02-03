@@ -13,9 +13,8 @@
 		<log
 			type="coverage-html"
 			target="../build/log/html"
-			charset="UTF-8"
-			lowUpperBound="0.0000000000001"
-			highLowerBound="99.999999999999"
+			lowUpperBound="0"
+			highLowerBound="99"
 		/>
 		<log type="coverage-clover" target="../build/log/clover.xml"/>
 		<log

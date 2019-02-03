@@ -11,13 +11,13 @@
     ],
     "require": {
 		"php": "^7.1",
-		"phpunit/phpunit": "^7.0"
+		"phpunit/phpunit": "^7.0 || ^8.0"
 	},
 	"require-dev": {
 		"consistence/coding-standard": "~0.13.0",
 		"jakub-onderka/php-parallel-lint": "^0.9",
 		"phpstan/phpstan": "^0.9",
-		"satooshi/php-coveralls": "dev-master",
+		"php-coveralls/php-coveralls": "2.1.0",
 		"slevomat/coding-standard": "^2.0"
 	},
 	"autoload": {
